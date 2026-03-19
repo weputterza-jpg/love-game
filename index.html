@@ -278,48 +278,60 @@ cursor:pointer;
 /* ✅ รองรับมือถือ */
 @media (max-width: 600px){
 
+  body{
+    overflow-x:hidden;
+  }
+
   #puzzle{
-    width:320px;
-    height:320px;
+    width:300px;
+    height:300px;
   }
 
   .tile{
-    background-size:320px 320px !important;
+    background-size:300px 300px !important;
   }
 
   h1{
-    font-size:22px;
+    font-size:20px;
     padding:0 10px;
+    margin-top:10px;
   }
 
   button{
-    font-size:16px;
-    padding:10px 25px;
+    font-size:15px;
+    padding:8px 20px;
   }
 
   #timer{
-    font-size:16px;
+    font-size:15px;
   }
 
   #message{
-    font-size:24px;
-    padding:10px 20px;
+    font-size:20px;
+    padding:10px 15px;
+    max-width:300px;
   }
 
   #giftBox{
-    font-size:40px;
+    font-size:35px;
     right:5px;
+    top:15%;
+  }
+
+  /* ซ่อนรูปข้างๆ ในมือถือ */
+  body > img{
+    display:none;
   }
 
   .envelope{
-    width:280px;
-    height:190px;
+    width:260px;
+    height:175px;
   }
 
   .flap{
-    border-left:140px solid transparent;
-    border-right:140px solid transparent;
-    border-top:95px solid #ff8fa3;
+    border-left:130px solid transparent;
+    border-right:130px solid transparent;
+    border-top:88px solid #ff8fa3;
   }
 
   #videoPopup video{
@@ -328,6 +340,10 @@ cursor:pointer;
 
   #imageBox img{
     max-width:95%;
+  }
+
+  #countdown{
+    font-size:60px;
   }
 
 }
