@@ -355,56 +355,45 @@ cursor:pointer;
 /* ✅ รองรับ iPad */
 @media (min-width: 601px) and (max-width: 1024px){
 
-  #puzzle{
-    width:360px;
-    height:360px;
-  }
-
-  .tile{
-    background-size:360px 360px !important;
+  body{
+    overflow-x:hidden;
   }
 
   h1{
-    font-size:28px;
+    font-size:26px;
   }
 
-  button{
-    font-size:17px;
-    padding:11px 30px;
+  #puzzle{
+    width:340px;
+    height:340px;
   }
 
-  #timer{
-    font-size:18px;
+  .tile{
+    background-size:340px 340px !important;
   }
 
-  #message{
-    font-size:30px;
-    padding:12px 25px;
+  /* จัดรูปข้างๆให้พอดีจอ */
+  body > img{
+    width:120px !important;
+    max-height:60vh !important;
+    object-fit:contain !important;
+    bottom:0 !important;
   }
 
   #giftBox{
-    font-size:50px;
-    right:15px;
+    font-size:45px;
+    right:10px;
   }
 
   .envelope{
-    width:320px;
-    height:215px;
+    width:300px;
+    height:200px;
   }
 
   .flap{
-    border-left:160px solid transparent;
-    border-right:160px solid transparent;
-    border-top:108px solid #ff8fa3;
-  }
-
-  #videoPopup video{
-    width:80%;
-    max-width:600px;
-  }
-
-  #imageBox img{
-    max-width:80%;
+    border-left:150px solid transparent;
+    border-right:150px solid transparent;
+    border-top:100px solid #ff8fa3;
   }
 
 }
@@ -594,6 +583,11 @@ startHearts()
 
 showLoveBox()
 
+function showLoveBox(){
+// reset ซองจดหมายก่อนทุกครั้ง
+document.querySelector(".envelope").classList.remove("open")
+document.getElementById("letter").style.display="none"
+document.getElementById("envelopeBox").style.display="flex"
 }
 
 }
