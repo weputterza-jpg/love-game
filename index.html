@@ -282,45 +282,49 @@ cursor:pointer;
     overflow-x:hidden;
   }
 
-  #puzzle{
-    width:300px;
-    height:300px;
-  }
-
-  .tile{
-    background-size:300px 300px !important;
+  /* จัดรูปข้างซ้ายขวาให้เล็กลงแต่ยังเห็นอยู่ */
+  body > img[src*="left"], 
+  body > img[src*="right"]{
+    width:80px !important;
+    height:auto !important;
   }
 
   h1{
-    font-size:20px;
-    padding:0 10px;
-    margin-top:10px;
+    font-size:18px;
+    padding:0 5px;
+    margin-top:5px;
   }
 
   button{
-    font-size:15px;
-    padding:8px 20px;
+    font-size:14px;
+    padding:8px 18px;
   }
 
   #timer{
-    font-size:15px;
+    font-size:14px;
+    margin:5px;
+  }
+
+  #puzzle{
+    width:280px;
+    height:280px;
+    margin:5px auto;
+  }
+
+  .tile{
+    background-size:280px 280px !important;
   }
 
   #message{
-    font-size:20px;
-    padding:10px 15px;
-    max-width:300px;
+    font-size:18px;
+    padding:8px 12px;
+    max-width:280px;
   }
 
   #giftBox{
-    font-size:35px;
-    right:5px;
-    top:15%;
-  }
-
-  /* ซ่อนรูปข้างๆ ในมือถือ */
-  body > img{
-    display:none;
+    font-size:30px;
+    right:3px;
+    top:12%;
   }
 
   .envelope{
