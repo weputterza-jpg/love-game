@@ -14,7 +14,15 @@ background-position:center;
 background-repeat:no-repeat;
 margin:0;
 min-height:100vh;
+min-height:100dvh;
 text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-start;
+padding:30px 0 20px 0;
+box-sizing:border-box;
+overflow-x:hidden;
 }
 
 h1{
@@ -28,7 +36,7 @@ animation:float 2s infinite alternate;
 #puzzle{
 width:400px;
 height:400px;
-margin:auto;
+margin:0 auto 20px auto;
 display:grid;
 grid-template-columns:repeat(4,1fr);
 grid-template-rows:repeat(4,1fr);
@@ -89,28 +97,23 @@ cursor:pointer;
 
 .flap {
     position: absolute;
-    top: 0; /* ยึดที่ขอบบนของซอง */
+    top: 0;
     left: 0;
     width: 0;
     height: 0;
-    /* สร้างสามเหลี่ยม */
     border-left: 180px solid transparent;
     border-right: 180px solid transparent;
-    border-top: 120px solid #ff8fa3; /* ใช้ border-top เพื่อให้สามเหลี่ยมชี้ลงข้างล่าง */
-    border-bottom: none; 
-    
-    z-index: 5; /* ตั้งค่าให้สูงกว่า .letter เพื่อให้ทับจดหมายมิด */
-    transform-origin: top; /* ให้หมุนจากขอบบน */
+    border-top: 120px solid #ff8fa3;
+    border-bottom: none;
+    z-index: 5;
+    transform-origin: top;
     transition: transform 0.6s ease;
 }
 
 .envelope.open .flap {
-    /* หมุน 180 องศาขึ้นไปข้างบน */
-    transform: rotateX(180deg); 
-    z-index: 1; /* เมื่อเปิดแล้ว ให้ไปอยู่ข้างหลัง เพื่อไม่ให้บังเนื้อหาจดหมาย */
+    transform: rotateX(180deg);
+    z-index: 1;
 }
-
-
 
 .letter{
 display:none;
@@ -141,17 +144,14 @@ animation:popup 0.5s;
 transform:translate(-50%,-50%) scale(0.5);
 opacity:0;
 }
-
 70%{
 transform:translate(-50%,-50%) scale(1.1);
 }
-
 100%{
 transform:translate(-50%,-50%) scale(1);
 opacity:1;
 }
 }
-
 
 button:hover{
 background:#e11d48;
@@ -275,127 +275,116 @@ color:white;
 cursor:pointer;
 }
 
-/* ✅ รองรับมือถือ */
+/* ✅ รองรับมือถือ (iPhone ทุกรุ่น) */
 @media (max-width: 600px){
-
   body{
-    overflow-x:hidden;
+    justify-content:flex-start;
+    padding-top:16px;
+    padding-bottom:12px;
   }
-
-  /* จัดรูปข้างซ้ายขวาให้เล็กลงแต่ยังเห็นอยู่ */
-  body > img[src*="left"], 
-  body > img[src*="right"]{
-    width:80px !important;
-    height:auto !important;
-  }
-
   h1{
-    font-size:18px;
-    padding:0 5px;
-    margin-top:5px;
+    font-size:17px;
+    margin:0 0 6px 0;
+    padding:0 8px;
+    letter-spacing:1px;
   }
-
   button{
     font-size:14px;
-    padding:8px 18px;
+    padding:8px 22px;
+    margin:4px 0;
   }
-
   #timer{
-    font-size:14px;
-    margin:5px;
+    font-size:13px;
+    margin:4px 0;
   }
-
-  #puzzle{
-    width:280px;
-    height:280px;
-    margin:5px auto;
-  }
-
-  .tile{
-    background-size:280px 280px !important;
-  }
-
-  #message{
-    font-size:18px;
-    padding:8px 12px;
-    max-width:280px;
-  }
-
-  #giftBox{
-    font-size:30px;
-    right:3px;
-    top:12%;
-  }
-
-  .envelope{
-    width:260px;
-    height:175px;
-  }
-
-  .flap{
-    border-left:130px solid transparent;
-    border-right:130px solid transparent;
-    border-top:88px solid #ff8fa3;
-  }
-
-  #videoPopup video{
-    width:95%;
-  }
-
-  #imageBox img{
-    max-width:95%;
-  }
-
   #countdown{
-    font-size:60px;
+    font-size:56px;
+    margin:4px 0;
   }
-
+  #puzzle{
+    width:min(75vw, 300px);
+    height:min(75vw, 300px);
+    margin:6px auto;
+  }
+  .tile{
+    background-size:min(75vw, 300px) min(75vw, 300px) !important;
+  }
+  #message{
+    font-size:16px;
+    padding:8px 12px;
+    max-width:85vw;
+    margin:6px auto;
+  }
+  #giftBox{
+    font-size:28px;
+    right:4px;
+    top:10%;
+  }
+  .envelope{
+    width:240px;
+    height:160px;
+  }
+  .flap{
+    border-left:120px solid transparent;
+    border-right:120px solid transparent;
+    border-top:80px solid #ff8fa3;
+  }
+  #videoPopup video{ width:95%; }
+  #imageBox img{ max-width:95%; }
 }
 
-/* ✅ รองรับ iPad */
-@media (min-width: 601px) and (max-width: 1024px){
-
+/* ✅ รองรับ iPad Air 4/5/6 และ iPad ทั่วไป */
+@media (min-width: 601px) and (max-width: 1366px){
   body{
-    overflow-x:hidden;
+    justify-content:flex-start;
+    padding:24px 0 20px 0;
   }
-
   h1{
-    font-size:26px;
+    font-size:28px;
+    margin:0 0 10px 0;
   }
-
+  button{
+    font-size:16px;
+    padding:10px 28px;
+    margin:6px 0;
+  }
+  #timer{
+    font-size:18px;
+    margin:6px 0;
+  }
+  #countdown{
+    font-size:70px;
+  }
   #puzzle{
-    width:340px;
-    height:340px;
+    width:min(55vw, 380px);
+    height:min(55vw, 380px);
+    margin:10px auto;
   }
-
   .tile{
-    background-size:340px 340px !important;
+    background-size:min(55vw, 380px) min(55vw, 380px) !important;
   }
-
-  /* จัดรูปข้างๆให้พอดีจอ */
-  body > img{
-    width:120px !important;
-    max-height:60vh !important;
-    object-fit:contain !important;
-    bottom:0 !important;
+  #message{
+    font-size:24px;
+    padding:12px 20px;
+    max-width:70vw;
+    margin:8px auto;
   }
-
   #giftBox{
-    font-size:45px;
-    right:10px;
+    font-size:50px;
+    right:16px;
+    top:18%;
   }
-
   .envelope{
     width:300px;
     height:200px;
   }
-
   .flap{
     border-left:150px solid transparent;
     border-right:150px solid transparent;
     border-top:100px solid #ff8fa3;
   }
-
+  #videoPopup video{ max-width:70%; }
+  #imageBox img{ max-width:80%; }
 }
 
 </style>
@@ -421,260 +410,219 @@ cursor:pointer;
 </audio>
 
 <div id="envelopeBox">
-
-<div class="envelope" onclick="openLetter()">
+  <div class="envelope" onclick="openLetter()">
     <div class="flap"></div>
     <div class="heartCenter">❤️</div>
+  </div>
+  <div class="letter" id="letter">
+    <h2>ถึงเกด ❤️</h2>
+    <p>
+      ขอบคุณที่เล่นเกมนี้จนจบนะ<br>
+      เราขอโทษที่คืนนั้นเราไม่ได้ไปหาเอง เราไม่ค่อยสบายตัวด้วยเรายังท้องเสียอยู่วันนั้น<br>
+      ขอโทษจริงๆนะเกดเราจะไม่ให้มีแบบนี้เกิดขึ้นแล้ว รักเกดมากนะ ❤️
+    </p>
+    <button onclick="closeBox()">ปิด</button>
+  </div>
 </div>
 
-<div class="letter" id="letter">
-<h2>ถึงเกด ❤️</h2>
-<p>
-ขอบคุณที่เล่นเกมนี้จนจบนะ  
-เราขอโทษที่คืนนั้นเราไม่ได้ไปหาเอง เราไม่ค่อยสบายตัวด้วยเรายังท้องเสียอยู่วันนั้น  
-ขอโทษจริงๆนะเกดเราจะไม่ให้มีเเบบนี้เกิดขึ้นเเล้ว รักเกดมากนะ ❤️
-</p>
-
-<button onclick="closeBox()">ปิด</button>
-
-</div>
-
-</div>
 <div id="imageBox" onclick="this.style.display='none'">
   <img src="photo.jpg">
 </div>
+
 <script>
 
 const puzzle = document.getElementById("puzzle")
 
-let positions=[
-0,1,2,3,
-4,5,6,7,
-8,9,10,11,
-12,13,14,15
+let positions = [
+  0,1,2,3,
+  4,5,6,7,
+  8,9,10,11,
+  12,13,14,15
 ]
 
-let firstTile=null
-let timerInterval=null
-let time=0
+let firstTile = null
+let timerInterval = null
+let time = 0
+let isPaused = false
+let gameStarted = false
 
+/* ── startGame ───────────────────────────────── */
 function startGame(){
+  let count = 3
+  let cd  = document.getElementById("countdown")
+  let btn = document.querySelector("button")
 
-let count=3
-let cd=document.getElementById("countdown")
-let btn=document.querySelector("button")
+  cd.style.display = "block"
+  btn.disabled = true
+  cd.innerText = count
 
-cd.style.display="block"
-btn.disabled=true
-cd.innerText=count
-
-let cdInterval=setInterval(()=>{
-count--
-if(count>0){
-cd.innerText=count
-}else{
-cd.innerText="💖"
-setTimeout(()=>{
-cd.style.display="none"
-btn.disabled=false
-actualStart()
-gameStarted=true
-},500)
-clearInterval(cdInterval)
-}
-},1000)
-
+  let cdInterval = setInterval(()=>{
+    count--
+    if(count > 0){
+      cd.innerText = count
+    } else {
+      cd.innerText = "💖"
+      setTimeout(()=>{
+        cd.style.display = "none"
+        btn.disabled = false
+        actualStart()
+        gameStarted = true
+      }, 500)
+      clearInterval(cdInterval)
+    }
+  }, 1000)
 }
 
+/* ── actualStart ─────────────────────────────── */
 function actualStart(){
+  isPaused = false
+  document.getElementById("mainBtn").innerText = "⏸️ หยุดเกม"
+  puzzle.innerHTML = ""
+  document.getElementById("message").style.display = "none"
 
-isPaused=false
-document.getElementById("mainBtn").innerText="⏸️ หยุดเกม"
+  // ✅ คำนวณขนาด puzzle จริงจากหน้าจอ แทนการ hardcode
+  const puzzleSize = puzzle.offsetWidth
 
-puzzle.innerHTML=""
+  positions.sort(()=> Math.random() - 0.5)
 
-document.getElementById("message").style.display="none"
+  positions.forEach(pos => {
+    let tile = document.createElement("div")
+    tile.className = "tile"
 
-positions.sort(()=>Math.random()-0.5)
+    let x = (pos % 4) * -(puzzleSize / 4)
+    let y = Math.floor(pos / 4) * -(puzzleSize / 4)
+    tile.style.backgroundPosition = x + "px " + y + "px"
+    tile.style.backgroundSize = puzzleSize + "px " + puzzleSize + "px"
+    tile.dataset.correct = pos
 
-positions.forEach(pos=>{
+    tile.onclick = function(){
+      if(firstTile == null){
+        firstTile = tile
+        tile.style.border = "3px solid red"
+      } else {
+        let temp = tile.style.backgroundPosition
+        tile.style.backgroundPosition = firstTile.style.backgroundPosition
+        firstTile.style.backgroundPosition = temp
 
-let tile=document.createElement("div")
-tile.className="tile"
+        let tempCorrect = tile.dataset.correct
+        tile.dataset.correct = firstTile.dataset.correct
+        firstTile.dataset.correct = tempCorrect
 
-let x=(pos%4)*-100
-let y=Math.floor(pos/4)*-100
+        firstTile.style.border = "none"
+        firstTile = null
 
-tile.style.backgroundPosition=x+"px "+y+"px"
+        checkWin()
+      }
+    }
 
-tile.dataset.correct=pos
+    puzzle.appendChild(tile)
+  })
 
-tile.onclick=function(){
-
-if(firstTile==null){
-
-firstTile=tile
-tile.style.border="3px solid red"
-
-}else{
-
-let temp=tile.style.backgroundPosition
-tile.style.backgroundPosition=firstTile.style.backgroundPosition
-firstTile.style.backgroundPosition=temp
-
-let tempCorrect = tile.dataset.correct
-tile.dataset.correct = firstTile.dataset.correct
-firstTile.dataset.correct = tempCorrect
-
-firstTile.style.border="none"
-firstTile=null
-
-checkWin()
-
+  time = 0
+  clearInterval(timerInterval)
+  timerInterval = setInterval(()=>{
+    time++
+    document.getElementById("timer").innerText = "เวลา: " + time + " วินาที"
+  }, 1000)
 }
 
-}
-
-puzzle.appendChild(tile)
-
-})
-
-time=0
-
-clearInterval(timerInterval)
-
-timerInterval=setInterval(()=>{
-
-time++
-
-document.getElementById("timer").innerText="เวลา: "+time+" วินาที"
-
-},1000)
-
-}
-
+/* ── checkWin ────────────────────────────────── */
 function checkWin(){
+  let tiles = document.querySelectorAll(".tile")
+  let correct = true
 
-let tiles=document.querySelectorAll(".tile")
+  tiles.forEach((tile, i)=>{
+    if(parseInt(tile.dataset.correct) !== i){
+      correct = false
+    }
+  })
 
-let correct=true
-
-tiles.forEach((tile,i)=>{
-
-if(parseInt(tile.dataset.correct)!==i){
-correct=false
+  if(correct){
+    document.querySelectorAll(".tile").forEach(t => {
+      t.style.boxShadow = "0 0 15px rgba(225,29,72,0.8)"
+      t.style.borderRadius = "8px"
+    })
+    clearInterval(timerInterval)
+    document.getElementById("message").style.display = "block"
+    document.getElementById("music").play()
+    startHearts()
+    showLoveBox()
+  }
 }
 
-})
-
-if(correct){
-document.querySelectorAll(".tile").forEach(t=>{
-t.style.boxShadow="0 0 15px rgba(225,29,72,0.8)"
-t.style.borderRadius="8px"
-})
-
-clearInterval(timerInterval)
-
-document.getElementById("message").style.display="block"
-
-document.getElementById("music").play()
-
-startHearts()
-
-showLoveBox()
-
+/* ── showLoveBox ─────────────────────────────── */
+// ✅ แก้: ย้ายออกมาอยู่ระดับเดียวกับฟังก์ชันอื่น (เดิมซ้อนอยู่ใน checkWin)
 function showLoveBox(){
-// reset ซองจดหมายก่อนทุกครั้ง
-document.querySelector(".envelope").classList.remove("open")
-document.getElementById("letter").style.display="none"
-document.getElementById("envelopeBox").style.display="flex"
+  document.querySelector(".envelope").classList.remove("open")
+  document.getElementById("letter").style.display = "none"
+  document.getElementById("envelopeBox").style.display = "flex"
 }
 
-}
-
+/* ── startHearts ─────────────────────────────── */
+// ✅ แก้: ย้ายออกมาอยู่ระดับเดียวกับฟังก์ชันอื่น (เดิมซ้อนอยู่ใน checkWin)
 function startHearts(){
-
-setInterval(()=>{
-
-let heart=document.createElement("div")
-heart.className="heart"
-heart.innerText="💖"
-
-heart.style.left=Math.random()*100+"vw"
-
-document.body.appendChild(heart)
-
-setTimeout(()=>heart.remove(),4000)
-
-},300)
-
+  setInterval(()=>{
+    let heart = document.createElement("div")
+    heart.className = "heart"
+    heart.innerText = "💖"
+    heart.style.left = Math.random() * 100 + "vw"
+    document.body.appendChild(heart)
+    setTimeout(()=> heart.remove(), 4000)
+  }, 300)
 }
 
-function showLoveBox(){
-document.getElementById("envelopeBox").style.display="flex";
-}
-
+/* ── closeBox ────────────────────────────────── */
 function closeBox(){
-  document.getElementById("envelopeBox").style.display="none";
-  let box = document.getElementById("imageBox")
-  box.style.display="flex"
+  document.getElementById("envelopeBox").style.display = "none"
+  document.getElementById("imageBox").style.display = "flex"
 }
 
+/* ── openLetter ──────────────────────────────── */
 function openLetter(){
-document.querySelector(".envelope").classList.add("open")
-document.getElementById("letter").style.display = "block"
+  document.querySelector(".envelope").classList.add("open")
+  document.getElementById("letter").style.display = "block"
 }
 
+/* ── openVideo / closeVideo ──────────────────── */
 function openVideo(){
-// หยุดเพลงพื้นหลังก่อน
-let music=document.getElementById("music")
-music.pause()
-
-let popup=document.getElementById("videoPopup")
-popup.style.display="flex"
-document.getElementById("myVideo").play()
+  document.getElementById("music").pause()
+  document.getElementById("videoPopup").style.display = "flex"
+  document.getElementById("myVideo").play()
 }
 
 function closeVideo(){
-let popup=document.getElementById("videoPopup")
-popup.style.display="none"
-document.getElementById("myVideo").pause()
-document.getElementById("myVideo").currentTime=0
+  document.getElementById("videoPopup").style.display = "none"
+  document.getElementById("myVideo").pause()
+  document.getElementById("myVideo").currentTime = 0
 }
 
-let isPaused=false
-
+/* ── toggleGame ──────────────────────────────── */
+// ✅ แก้: เหลือแค่อันเดียว (เดิมมี 2 อัน อันที่ 2 ทับอันแรกทุกครั้ง)
 function toggleGame(){
-let btn=document.getElementById("mainBtn")
+  let btn = document.getElementById("mainBtn")
 
-if(!isPaused){
-// หยุดเกม
-clearInterval(timerInterval)
-isPaused=true
-btn.innerText="▶️ เล่นต่อ"
-
-}else{
-// เล่นต่อ
-timerInterval=setInterval(()=>{
-time++
-document.getElementById("timer").innerText="เวลา: "+time+" วินาที"
-},1000)
-isPaused=false
-btn.innerText="⏸️ หยุดเกม"
-}
+  if(!isPaused){
+    clearInterval(timerInterval)
+    isPaused = true
+    btn.innerText = "▶️ เล่นต่อ"
+  } else {
+    timerInterval = setInterval(()=>{
+      time++
+      document.getElementById("timer").innerText = "เวลา: " + time + " วินาที"
+    }, 1000)
+    isPaused = false
+    btn.innerText = "⏸️ หยุดเกม"
+  }
 }
 
-let gameStarted=false
-
+/* ── handleBtn ───────────────────────────────── */
 function handleBtn(){
-if(!gameStarted){
-// ยังไม่เคยเริ่ม → เริ่มเกมใหม่
-gameStarted=true
-startGame()
-}else{
-// เริ่มแล้ว → toggle หยุด/เล่นต่อ
-toggleGame()
-}
+  if(!gameStarted){
+    gameStarted = true
+    startGame()
+  } else {
+    toggleGame()
+  }
 }
 
 </script>
@@ -684,8 +632,8 @@ toggleGame()
   <div style="font-size:14px;color:#e11d48;font-weight:bold;text-align:center;margin-top:5px;text-shadow:1px 1px 0 white;">กดเพื่อรับของขวัญ</div>
 </div>
 
-<div id="videoPopup">
-  <video id="myVideo" controls>
+<div id="videoPopup" onclick="if(event.target===this)closeVideo()">
+  <video id="myVideo" controls onclick="event.stopPropagation()">
     <source src="video.mp4" type="video/mp4">
   </video>
   <button id="closeVideo" onclick="closeVideo()">❤️ ปิด</button>
