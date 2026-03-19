@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Love Puzzle</title>
+
+<style>
+
+body{
+font-family:Sarabun;
+background-image:url("bg.jpg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+margin:0;
+min-height:100vh;
+text-align:center;
+}
+
+h1{
+color:#e11d48;
+font-size:32px;
+text-shadow:2px 2px 0px #ffb3c1, 0 0 20px rgba(225,29,72,0.3);
+letter-spacing:2px;
+animation:float 2s infinite alternate;
+}
+
+#puzzle{
+width:400px;
+height:400px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+grid-template-rows:repeat(4,1fr);
+gap:3px;
+}
+
+.tile{
+width:100%;
+height:100%;
+background-image:url("./love.jpg");
+background-size:400px 400px;
+cursor:pointer;
+border-radius:4px;
+box-shadow:0 2px 6px rgba(0,0,0,0.3);
+transition:transform 0.15s, box-shadow 0.15s;
+}
+
+.tile:hover{
+transform:scale(1.05);
+box-shadow:0 4px 12px rgba(225,29,72,0.4);
+z-index:10;
+position:relative;
+}
+
+button{
+padding:12px 35px;
+font-size:18px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#fb7185,#e11d48);
+color:white;
+cursor:pointer;
+box-shadow:0 4px 15px rgba(225,29,72,0.4);
+letter-spacing:1px;
+transition:all 0.3s;
+}
+
+#envelopeBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.envelope{
+width:360px;
+height:240px;
+background:#ff6b81;
+position:relative;
+margin:30px auto;
+cursor:pointer;
+}
+
+.flap {
+    position: absolute;
+    top: 0; /* ยึดที่ขอบบนของซอง */
+    left: 0;
+    width: 0;
+    height: 0;
+    /* สร้างสามเหลี่ยม */
+    border-left: 180px solid transparent;
+    border-right: 180px solid transparent;
+    border-top: 120px solid #ff8fa3; /* ใช้ border-top เพื่อให้สามเหลี่ยมชี้ลงข้างล่าง */
+    border-bottom: none; 
+    
+    z-index: 5; /* ตั้งค่าให้สูงกว่า .letter เพื่อให้ทับจดหมายมิด */
+    transform-origin: top; /* ให้หมุนจากขอบบน */
+    transition: transform 0.6s ease;
+}
+
+.envelope.open .flap {
+    /* หมุน 180 องศาขึ้นไปข้างบน */
+    transform: rotateX(180deg); 
+    z-index: 1; /* เมื่อเปิดแล้ว ให้ไปอยู่ข้างหลัง เพื่อไม่ให้บังเนื้อหาจดหมาย */
+}
+
+
+
+.letter{
+display:none;
+background:white;
+padding:20px;
+margin-top:20px;
+border-radius:10px;
+text-align:center;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:320px;
+}
+
+.boxContent{
+background:white;
+padding:30px;
+border-radius:15px;
+width:300px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+animation:popup 0.5s;
+}
+
+@keyframes popup{
+0%{
+transform:translate(-50%,-50%) scale(0.5);
+opacity:0;
+}
+
+70%{
+transform:translate(-50%,-50%) scale(1.1);
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+
+button:hover{
+background:#e11d48;
+}
+
+#timer{
+margin:10px;
+font-size:20px;
+}
+
+#message{
+display:none;
+font-size:36px;
+font-weight:bold;
+color:white;
+margin:10px auto;
+animation:float 2s infinite alternate;
+text-shadow:0 0 10px #e11d48, 0 0 30px #fb7185;
+background:linear-gradient(135deg,#e11d48,#fb7185);
+padding:15px 30px;
+border-radius:20px;
+box-shadow:0 5px 20px rgba(225,29,72,0.5);
+width:fit-content;
+max-width:400px;
+}
+
+@keyframes float{
+from{transform:translateY(0)}
+to{transform:translateY(-10px)}
+}
+
+.heart{
+position:fixed;
+color:red;
+font-size:20px;
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px)}
+100%{transform:translateY(100vh)}
+}
+
+.envelope .heartCenter{
+position:absolute;
+top:60%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:60px;
+z-index:3;
+transition:0.3s;
+}
+
+.envelope.open .heartCenter{
+opacity:0;
+}
+
+#imageBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+cursor:pointer;
+}
+
+#imageBox img{
+max-width:90%;
+max-height:90vh;
+border-radius:20px;
+}
+
+#giftBox{
+position:fixed;
+right:20px;
+top:20%;
+transform:translateY(-50%);
+font-size:60px;
+cursor:pointer;
+animation:float 2s infinite alternate;
+z-index:100;
+filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+transition:transform 0.2s;
+}
+
+#giftBox:hover{
+transform:translateY(-50%) scale(1.2);
+}
+
+#videoPopup{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+flex-direction:column;
+}
+
+#videoPopup video{
+width:90%;
+max-width:500px;
+border-radius:15px;
+}
+
+#closeVideo{
+margin-top:15px;
+padding:10px 30px;
+font-size:18px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#fb7185,#e11d48);
+color:white;
+cursor:pointer;
+}
+
+/* ✅ รองรับมือถือ */
+@media (max-width: 600px){
+
+  #puzzle{
+    width:320px;
+    height:320px;
+  }
+
+  .tile{
+    background-size:320px 320px !important;
+  }
+
+  h1{
+    font-size:22px;
+    padding:0 10px;
+  }
+
+  button{
+    font-size:16px;
+    padding:10px 25px;
+  }
+
+  #timer{
+    font-size:16px;
+  }
+
+  #message{
+    font-size:24px;
+    padding:10px 20px;
+  }
+
+  #giftBox{
+    font-size:40px;
+    right:5px;
+  }
+
+  .envelope{
+    width:280px;
+    height:190px;
+  }
+
+  .flap{
+    border-left:140px solid transparent;
+    border-right:140px solid transparent;
+    border-top:95px solid #ff8fa3;
+  }
+
+  #videoPopup video{
+    width:95%;
+  }
+
+  #imageBox img{
+    max-width:95%;
+  }
+
+}
+
+/* ✅ รองรับ iPad */
+@media (min-width: 601px) and (max-width: 1024px){
+
+  #puzzle{
+    width:360px;
+    height:360px;
+  }
+
+  .tile{
+    background-size:360px 360px !important;
+  }
+
+  h1{
+    font-size:28px;
+  }
+
+  button{
+    font-size:17px;
+    padding:11px 30px;
+  }
+
+  #timer{
+    font-size:18px;
+  }
+
+  #message{
+    font-size:30px;
+    padding:12px 25px;
+  }
+
+  #giftBox{
+    font-size:50px;
+    right:15px;
+  }
+
+  .envelope{
+    width:320px;
+    height:215px;
+  }
+
+  .flap{
+    border-left:160px solid transparent;
+    border-right:160px solid transparent;
+    border-top:108px solid #ff8fa3;
+  }
+
+  #videoPopup video{
+    width:80%;
+    max-width:600px;
+  }
+
+  #imageBox img{
+    max-width:80%;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>ต่อภาพให้สำเร็จนะ 🧩</h1>
+
+<button id="mainBtn" onclick="handleBtn()">เริ่มเกม ❤️</button>
+
+<div id="timer">เวลา: 0 วินาที</div>
+<div id="countdown" style="display:none;font-size:80px;color:#e11d48;font-weight:bold;text-shadow:0 0 20px #fb7185;"></div>
+
+<div id="puzzle"></div>
+
+<div id="message">
+เย้ๆชนะแล้ว 💖 ดีกันนะ
+</div>
+
+<audio id="music">
+<source src="music.mp3">
+</audio>
+
+<div id="envelopeBox">
+
+<div class="envelope" onclick="openLetter()">
+    <div class="flap"></div>
+    <div class="heartCenter">❤️</div>
+</div>
+
+<div class="letter" id="letter">
+<h2>ถึงเกด ❤️</h2>
+<p>
+ขอบคุณที่เล่นเกมนี้จนจบนะ  
+เราขอโทษที่คืนนั้นเราไม่ได้ไปหาเอง เราไม่ค่อยสบายตัวด้วยเรายังท้องเสียอยู่วันนั้น  
+ขอโทษจริงๆนะเกดเราจะไม่ให้มีเเบบนี้เกิดขึ้นเเล้ว รักเกดมากนะ ❤️
+</p>
+
+<button onclick="closeBox()">ปิด</button>
+
+</div>
+
+</div>
+<div id="imageBox" onclick="this.style.display='none'">
+  <img src="photo.jpg">
+</div>
+<script>
+
+const puzzle = document.getElementById("puzzle")
+
+let positions=[
+0,1,2,3,
+4,5,6,7,
+8,9,10,11,
+12,13,14,15
+]
+
+let firstTile=null
+let timerInterval=null
+let time=0
+
+function startGame(){
+
+let count=3
+let cd=document.getElementById("countdown")
+let btn=document.querySelector("button")
+
+cd.style.display="block"
+btn.disabled=true
+cd.innerText=count
+
+let cdInterval=setInterval(()=>{
+count--
+if(count>0){
+cd.innerText=count
+}else{
+cd.innerText="💖"
+setTimeout(()=>{
+cd.style.display="none"
+btn.disabled=false
+actualStart()
+gameStarted=true
+},500)
+clearInterval(cdInterval)
+}
+},1000)
+
+}
+
+function actualStart(){
+
+isPaused=false
+document.getElementById("mainBtn").innerText="⏸️ หยุดเกม"
+
+puzzle.innerHTML=""
+
+document.getElementById("message").style.display="none"
+
+positions.sort(()=>Math.random()-0.5)
+
+positions.forEach(pos=>{
+
+let tile=document.createElement("div")
+tile.className="tile"
+
+let x=(pos%4)*-100
+let y=Math.floor(pos/4)*-100
+
+tile.style.backgroundPosition=x+"px "+y+"px"
+
+tile.dataset.correct=pos
+
+tile.onclick=function(){
+
+if(firstTile==null){
+
+firstTile=tile
+tile.style.border="3px solid red"
+
+}else{
+
+let temp=tile.style.backgroundPosition
+tile.style.backgroundPosition=firstTile.style.backgroundPosition
+firstTile.style.backgroundPosition=temp
+
+let tempCorrect = tile.dataset.correct
+tile.dataset.correct = firstTile.dataset.correct
+firstTile.dataset.correct = tempCorrect
+
+firstTile.style.border="none"
+firstTile=null
+
+checkWin()
+
+}
+
+}
+
+puzzle.appendChild(tile)
+
+})
+
+time=0
+
+clearInterval(timerInterval)
+
+timerInterval=setInterval(()=>{
+
+time++
+
+document.getElementById("timer").innerText="เวลา: "+time+" วินาที"
+
+},1000)
+
+}
+
+function checkWin(){
+
+let tiles=document.querySelectorAll(".tile")
+
+let correct=true
+
+tiles.forEach((tile,i)=>{
+
+if(parseInt(tile.dataset.correct)!==i){
+correct=false
+}
+
+})
+
+if(correct){
+document.querySelectorAll(".tile").forEach(t=>{
+t.style.boxShadow="0 0 15px rgba(225,29,72,0.8)"
+t.style.borderRadius="8px"
+})
+
+clearInterval(timerInterval)
+
+document.getElementById("message").style.display="block"
+
+document.getElementById("music").play()
+
+startHearts()
+
+showLoveBox()
+
+}
+
+}
+
+function startHearts(){
+
+setInterval(()=>{
+
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerText="💖"
+
+heart.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),4000)
+
+},300)
+
+}
+
+function showLoveBox(){
+document.getElementById("envelopeBox").style.display="flex";
+}
+
+function closeBox(){
+  document.getElementById("envelopeBox").style.display="none";
+  let box = document.getElementById("imageBox")
+  box.style.display="flex"
+}
+
+function openLetter(){
+document.querySelector(".envelope").classList.add("open")
+document.getElementById("letter").style.display = "block"
+}
+
+function openVideo(){
+// หยุดเพลงพื้นหลังก่อน
+let music=document.getElementById("music")
+music.pause()
+
+let popup=document.getElementById("videoPopup")
+popup.style.display="flex"
+document.getElementById("myVideo").play()
+}
+
+function closeVideo(){
+let popup=document.getElementById("videoPopup")
+popup.style.display="none"
+document.getElementById("myVideo").pause()
+document.getElementById("myVideo").currentTime=0
+}
+
+let isPaused=false
+
+function toggleGame(){
+let btn=document.getElementById("mainBtn")
+
+if(!isPaused){
+// หยุดเกม
+clearInterval(timerInterval)
+isPaused=true
+btn.innerText="▶️ เล่นต่อ"
+
+}else{
+// เล่นต่อ
+timerInterval=setInterval(()=>{
+time++
+document.getElementById("timer").innerText="เวลา: "+time+" วินาที"
+},1000)
+isPaused=false
+btn.innerText="⏸️ หยุดเกม"
+}
+}
+
+let gameStarted=false
+
+function handleBtn(){
+if(!gameStarted){
+// ยังไม่เคยเริ่ม → เริ่มเกมใหม่
+gameStarted=true
+startGame()
+}else{
+// เริ่มแล้ว → toggle หยุด/เล่นต่อ
+toggleGame()
+}
+}
+
+</script>
+
+<div id="giftBox" onclick="openVideo()">
+  🎁
+  <div style="font-size:14px;color:#e11d48;font-weight:bold;text-align:center;margin-top:5px;text-shadow:1px 1px 0 white;">กดเพื่อรับของขวัญ</div>
+</div>
+
+<div id="videoPopup">
+  <video id="myVideo" controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+  <button id="closeVideo" onclick="closeVideo()">❤️ ปิด</button>
+</div>
+
+</body>
+</html>
